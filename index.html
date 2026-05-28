@@ -3,14 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <meta name="theme-color" content="#1e2a3e">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="新達汽修">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-touch-fullscreen" content="yes">
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="icon-192.png">
+    <meta name="format-detection" content="telephone=no">
     <title>新達汽修 | 紧急救援·报价·自检</title>
     <style>
         * {
@@ -75,7 +70,7 @@
             background: #25D366;
             flex: 1;
         }
-        /* 定位按钮 */
+        /* 定位卡片 */
         .location-card {
             background: white;
             border-radius: 28px;
@@ -200,31 +195,6 @@
             margin-top: 8px;
             cursor: pointer;
         }
-        .install-banner {
-            background: linear-gradient(135deg, #ffb347 0%, #ff8c00 100%);
-            border-radius: 28px;
-            padding: 14px 20px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 12px;
-            cursor: pointer;
-        }
-        .install-banner span {
-            font-weight: 600;
-            color: #1e2a3e;
-        }
-        .install-banner button {
-            background: #1e2a3e;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 40px;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-        }
         .toast-msg {
             position: fixed;
             bottom: 30px;
@@ -248,17 +218,158 @@
             body { padding: 12px; }
             .shop-name { font-size: 1.3rem; }
         }
+
+        /* 坐标结果区域样式 */
+        .location-result-box {
+            background: white;
+            border-radius: 20px;
+            padding: 12px 16px;
+            margin-top: -12px;
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+            color: #2c3e44;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            border: 1px solid #eef2f5;
+        }
+        .coord-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-top: 10px;
+            gap: 10px;
+        }
+        .coord-value {
+            font-family: monospace;
+            background: #f1f3f5;
+            padding: 4px 10px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            word-break: break-all;
+            flex: 1;
+        }
+        .btn-copy-coord {
+            background: #ffb347;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 0.75rem;
+            cursor: pointer;
+            color: #1e2a3e;
+            white-space: nowrap;
+        }
+        .map-link {
+            color: #c0392b;
+            font-weight: 500;
+            text-decoration: none;
+            background: #fef0eb;
+            padding: 4px 12px;
+            border-radius: 40px;
+            display: inline-block;
+        }
+
+        /* ===== 安装教程弹窗 ===== */
+        .install-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        .install-modal.show {
+            visibility: visible;
+            opacity: 1;
+        }
+        .install-modal-content {
+            background: white;
+            border-radius: 32px;
+            max-width: 320px;
+            width: 85%;
+            padding: 28px 24px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .install-modal-icon {
+            font-size: 3rem;
+            margin-bottom: 12px;
+        }
+        .install-modal-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #1e2a3e;
+        }
+        .install-steps {
+            text-align: left;
+            margin: 20px 0;
+            background: #f5f7fb;
+            padding: 16px;
+            border-radius: 20px;
+        }
+        .step-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+            font-size: 0.85rem;
+        }
+        .step-number {
+            background: #ffb347;
+            color: #1e2a3e;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+        }
+        .step-text {
+            flex: 1;
+        }
+        .step-text strong {
+            color: #1e2a3e;
+        }
+        .ios-only, .android-only {
+            font-size: 0.7rem;
+            color: #ff8c00;
+            margin-top: 8px;
+            text-align: center;
+        }
+        .install-modal-close {
+            background: #ffb347;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 12px;
+        }
+        .install-modal-skip {
+            background: none;
+            border: none;
+            color: #999;
+            font-size: 0.7rem;
+            margin-top: 12px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
 <div class="container">
-    
-    <!-- PWA 安装提示横幅 -->
-    <div class="install-banner" id="installBanner" style="display: none;">
-        <span>📱 安装到主屏幕，随时使用</span>
-        <button id="installBtn">安装</button>
-    </div>
-
     <!-- 头部 + 紧急按钮 -->
     <div class="shop-header">
         <div class="shop-name">🚗 新達汽車業修車廠</div>
@@ -269,12 +380,17 @@
         </div>
     </div>
 
-    <!-- 功能1：一键定位 + 复制位置 -->
+    <!-- 功能1：一键定位 + 复制坐标按钮 (移除长按复制坐标文字) -->
     <div class="location-card">
         <div class="loc-text">📍 获取我的位置，发给车厂</div>
         <button class="btn-loc" id="getLocationBtn">📍 我现在在哪</button>
     </div>
-    <div id="locationResult" style="font-size:13px; margin-top:-12px; margin-bottom:16px; color:#4a5c6c;"></div>
+    
+    <!-- 定位结果显示区域 (动态展示坐标 + 查看地图 + 独立复制坐标按钮) -->
+    <div id="locationResultContainer" class="location-result-box" style="display: none;">
+        <div id="locationDisplayText"></div>
+        <div id="coordActionArea" class="coord-row"></div>
+    </div>
 
     <!-- 功能2：报价参考 -->
     <div class="card">
@@ -335,9 +451,36 @@
     <footer>保存到手机桌面，随时打开使用 | 新達汽車業 012-713 9704</footer>
 </div>
 <div id="toastMsg" class="toast-msg">✅ 已复制地址</div>
+<div id="toastCoordMsg" class="toast-msg" style="background:#ffb347; color:#1e2a3e;">📍 坐标已复制，可粘贴给店家</div>
+
+<!-- 安装教程弹窗 -->
+<div id="installModal" class="install-modal">
+    <div class="install-modal-content">
+        <div class="install-modal-icon">📱</div>
+        <div class="install-modal-title">添加到主屏幕</div>
+        <div class="install-steps">
+            <div class="step-item">
+                <span class="step-number">1</span>
+                <span class="step-text">点击浏览器底部的 <strong>分享按钮</strong> 或 <strong>菜单按钮</strong></span>
+            </div>
+            <div class="step-item">
+                <span class="step-number">2</span>
+                <span class="step-text">找到并点击 <strong>「添加到主屏幕」</strong></span>
+            </div>
+            <div class="step-item">
+                <span class="step-number">3</span>
+                <span class="step-text">点击 <strong>「添加」</strong> 完成</span>
+            </div>
+        </div>
+        <div class="ios-only" id="iosHint">🍎 iPhone 用户：点 Safari 底部的「分享」图标 → 添加到主屏幕</div>
+        <div class="android-only" id="androidHint" style="display:none;">🤖 Android 用户：点右上角「⋮」→ 添加到主屏幕</div>
+        <button class="install-modal-close" id="closeInstallModal">知道了</button>
+        <button class="install-modal-skip" id="dontShowAgain">不再显示</button>
+    </div>
+</div>
 
 <script>
-    // 故障自检折叠逻辑
+    // 故障自检折叠
     const items = document.querySelectorAll('.symptom-item');
     items.forEach(item => {
         item.addEventListener('click', function(e) {
@@ -355,80 +498,150 @@
         });
     });
 
-    // 定位功能
+    // 定位功能 + 显示“查看地图” + 独立“复制当前坐标”按钮 (移除长按复制坐标描述)
     const getLocationBtn = document.getElementById('getLocationBtn');
-    const locationResult = document.getElementById('locationResult');
+    const locationResultContainer = document.getElementById('locationResultContainer');
+    const locationDisplayText = document.getElementById('locationDisplayText');
+    const coordActionArea = document.getElementById('coordActionArea');
+    const toastCoord = document.getElementById('toastCoordMsg');
+
+    // 辅助显示toast
+    function showToast(msg, isCoordToast = false) {
+        const toastEl = isCoordToast ? toastCoord : document.getElementById('toastMsg');
+        toastEl.style.display = 'block';
+        toastEl.innerText = isCoordToast ? '📍 坐标已复制，可粘贴给店家' : msg;
+        setTimeout(() => {
+            toastEl.style.display = 'none';
+            if(isCoordToast) toastEl.innerText = '📍 坐标已复制，可粘贴给店家';
+            else toastEl.innerText = '✅ 已复制地址';
+        }, 2000);
+    }
+
     getLocationBtn.addEventListener('click', () => {
         if (navigator.geolocation) {
-            locationResult.innerHTML = '📍 正在获取位置...';
+            // 先显示加载状态
+            locationResultContainer.style.display = 'block';
+            locationDisplayText.innerHTML = '📍 正在获取位置...';
+            coordActionArea.innerHTML = ''; // 清空按钮区域
+
             navigator.geolocation.getCurrentPosition(
                 (position) => {
                     const lat = position.coords.latitude;
                     const lng = position.coords.longitude;
                     const mapsLink = `https://maps.google.com/?q=${lat},${lng}`;
-                    locationResult.innerHTML = `✅ 您当前位置：<a href="${mapsLink}" target="_blank" style="color:#c0392b;">点击查看地图</a> | 坐标：${lat.toFixed(5)}, ${lng.toFixed(5)}<br>📋 长按复制坐标发给车厂：${lat},${lng}`;
+                    const coordText = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+                    
+                    // 显示坐标详情 + 查看地图链接 + 独立复制坐标按钮
+                    locationDisplayText.innerHTML = `
+                        📍 当前坐标: <strong style="font-family:monospace;">${coordText}</strong>
+                    `;
+                    
+                    // 构建操作区域：包含「查看地图」链接 + 「复制当前坐标」按钮
+                    coordActionArea.innerHTML = `
+                        <a href="${mapsLink}" target="_blank" class="map-link" style="text-decoration:none;">🗺️ 查看地图</a>
+                        <button id="copyCurrentCoordBtn" class="btn-copy-coord">📋 复制当前坐标</button>
+                    `;
+                    
+                    // 绑定复制坐标按钮事件
+                    const copyCoordBtn = document.getElementById('copyCurrentCoordBtn');
+                    if (copyCoordBtn) {
+                        copyCoordBtn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            // 复制坐标文本 (lat,lng)
+                            const fullCoord = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+                            navigator.clipboard.writeText(fullCoord).then(() => {
+                                showToast('', true);
+                            }).catch(() => {
+                                alert('无法复制，请手动复制坐标：' + fullCoord);
+                            });
+                        });
+                    }
                 },
                 (error) => {
                     let errMsg = "无法获取位置，请检查GPS权限";
-                    if (error.code === 1) errMsg = "⚠️ 请允许位置权限才能使用定位";
-                    locationResult.innerHTML = errMsg;
+                    if (error.code === 1) {
+                        errMsg = "⚠️ 请允许位置权限才能使用定位";
+                    }
+                    locationDisplayText.innerHTML = errMsg;
+                    coordActionArea.innerHTML = '<span style="color:#999; font-size:12px;">请授予定位权限后重试</span>';
                 }
             );
         } else {
-            locationResult.innerHTML = "您的浏览器不支持定位";
+            locationResultContainer.style.display = 'block';
+            locationDisplayText.innerHTML = "您的浏览器不支持定位";
+            coordActionArea.innerHTML = '';
         }
     });
 
-    // 复制地址功能
+    // 复制车厂地址 (原有功能)
     const copyBtn = document.getElementById('copyAddressBtn');
-    const toast = document.getElementById('toastMsg');
     const fullAddress = "No.146 & 148, Jln Pahlawan 2, Taman Ungku Tun Aminah, 81300 Johor Bahru, Malaysia";
+    
     copyBtn.addEventListener('click', () => {
-        navigator.clipboard.writeText(fullAddress).then(() => {
-            toast.style.display = 'block';
-            setTimeout(() => { toast.style.display = 'none'; }, 2000);
-        }).catch(() => {
-            alert('手动复制地址：' + fullAddress);
-        });
+        navigator.clipboard.writeText(fullAddress)
+            .then(() => {
+                const toastAddr = document.getElementById('toastMsg');
+                toastAddr.style.display = 'block';
+                setTimeout(() => {
+                    toastAddr.style.display = 'none';
+                }, 2000);
+            })
+            .catch(() => {
+                alert('手动复制地址：' + fullAddress);
+            });
     });
 
-    // ========== PWA 安装功能 ==========
-    let deferredPrompt;
-    const installBanner = document.getElementById('installBanner');
-    const installBtn = document.getElementById('installBtn');
+    // =====================================================
+    // 安装教程弹窗逻辑（保持原有完整功能）
+    // =====================================================
+    const modal = document.getElementById('installModal');
+    const closeBtn = document.getElementById('closeInstallModal');
+    const dontShowBtn = document.getElementById('dontShowAgain');
+    const iosHint = document.getElementById('iosHint');
+    const androidHint = document.getElementById('androidHint');
 
-    window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        deferredPrompt = e;
-        installBanner.style.display = 'flex';
+    const ua = navigator.userAgent.toLowerCase();
+    const isIOS = /iphone|ipad|ipod/.test(ua);
+    const isAndroid = /android/.test(ua);
+    const isSafari = /safari/.test(ua) && !/crios/.test(ua) && !/chrome/.test(ua) && !/android/.test(ua);
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+    const dontShow = localStorage.getItem('install_tutorial_dont_show');
+
+    if (isIOS) {
+        iosHint.style.display = 'block';
+        androidHint.style.display = 'none';
+    } else {
+        iosHint.style.display = 'none';
+        androidHint.style.display = 'block';
+    }
+
+    let shouldShowInstallGuide = false;
+    if (!isStandalone && !dontShow) {
+        if (isIOS && isSafari) {
+            shouldShowInstallGuide = true;
+        } else if (isAndroid) {
+            shouldShowInstallGuide = true;
+        }
+    }
+
+    if (shouldShowInstallGuide) {
+        setTimeout(() => {
+            modal.classList.add('show');
+        }, 800);
+    }
+
+    closeBtn.addEventListener('click', () => {
+        modal.classList.remove('show');
     });
-
-    installBtn.addEventListener('click', async () => {
-        if (deferredPrompt) {
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            if (outcome === 'accepted') {
-                installBanner.style.display = 'none';
-            }
-            deferredPrompt = null;
+    dontShowBtn.addEventListener('click', () => {
+        localStorage.setItem('install_tutorial_dont_show', 'true');
+        modal.classList.remove('show');
+    });
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.remove('show');
         }
     });
-
-    // iOS 检测和提示
-    function isIOS() {
-        return /iphone|ipad|ipod/i.test(window.navigator.userAgent);
-    }
-    function isInStandaloneMode() {
-        return ('standalone' in window.navigator) && window.navigator.standalone;
-    }
-    if (isIOS() && !isInStandaloneMode()) {
-        setTimeout(() => {
-            const iosTip = document.createElement('div');
-            iosTip.innerHTML = `<div style="position:fixed;left:50%;bottom:20px;transform:translateX(-50%);width:90%;max-width:420px;background:#1e2a3e;color:white;padding:16px;border-radius:20px;z-index:99999;box-shadow:0 10px 30px rgba(0,0,0,0.3);font-size:14px;line-height:1.6;text-align:center;"><div style="font-size:16px;font-weight:700;margin-bottom:8px;">📱 安装到 iPhone</div><div>点击 Safari 的 <b style="background:#ffb347;color:#1e2a3e;padding:2px 8px;border-radius:12px;">分享按钮</b><br>然后选择 <b>「添加到主屏幕」</b></div><button id="closeIosTip" style="margin-top:12px;border:none;background:#ffb347;color:#1e2a3e;padding:8px 18px;border-radius:12px;cursor:pointer;font-weight:bold;">知道了</button></div>`;
-            document.body.appendChild(iosTip);
-            document.getElementById('closeIosTip').onclick = () => iosTip.remove();
-        }, 1500);
-    }
 </script>
 </body>
 </html>
