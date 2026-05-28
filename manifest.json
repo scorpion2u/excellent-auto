@@ -1,0 +1,22 @@
+{
+  "name": "新達汽修",
+  "short_name": "新達汽修",
+  "description": "新達汽車業修車廠 - 紧急救援、报价参考、故障自检",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#1e2a3e",
+  "theme_color": "#1e2a3e",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
