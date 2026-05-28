@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="ms">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="format-detection" content="telephone=no">
-    <title>新達汽修 | 紧急救援·报价·自检</title>
+    <title>新达汽修 | 紧急救援·报价·自检</title>
     <style>
         * {
             margin: 0;
@@ -54,17 +54,19 @@
             flex: 1;
             background: #e63946;
             border: none;
-            padding: 14px 0;
+            padding: 10px 6px;
             border-radius: 60px;
-            font-weight: bold;
-            font-size: 1rem;
+            font-weight: 600;
+            font-size: 0.85rem;
             text-align: center;
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            letter-spacing: 0.3px;
         }
         .btn-emergency a {
             color: white;
             text-decoration: none;
             display: block;
+            white-space: nowrap;
         }
         .btn-wa {
             background: #25D366;
@@ -217,6 +219,14 @@
         @media (max-width: 500px) {
             body { padding: 12px; }
             .shop-name { font-size: 1.3rem; }
+            .btn-emergency {
+                font-size: 0.78rem;
+                padding: 8px 4px;
+            }
+            .btn-emergency a {
+                white-space: normal;
+                line-height: 1.3;
+            }
         }
 
         /* 坐标结果区域样式 */
@@ -269,7 +279,7 @@
             display: inline-block;
         }
 
-        /* ===== 安装教程弹窗 ===== */
+        /* 安装教程弹窗 */
         .install-modal {
             position: fixed;
             top: 0;
@@ -372,21 +382,21 @@
 <div class="container">
     <!-- 头部 + 紧急按钮 -->
     <div class="shop-header">
-        <div class="shop-name">🚗 新達汽車業修車廠</div>
-        <div class="shop-slogan">Excellent Auto Car Service · 细心检查，认真维修</div>
+        <div class="shop-name">🚗 新达汽车修理厂</div>
+        <div class="shop-slogan">细心检查 · 认真维修 · 老实估价</div>
         <div class="emergency-row">
             <div class="btn-emergency"><a href="tel:+60127139704">📞 紧急拖车/救援</a></div>
             <div class="btn-emergency btn-wa"><a href="https://wa.me/60127139704?text=🚨%20紧急！我的车抛锚了，需要帮忙，地点：" target="_blank">💬 WhatsApp 紧急求助</a></div>
         </div>
     </div>
 
-    <!-- 功能1：一键定位 + 复制坐标按钮 (移除长按复制坐标文字) -->
+    <!-- 功能1：一键定位 + 复制坐标 -->
     <div class="location-card">
         <div class="loc-text">📍 获取我的位置，发给车厂</div>
-        <button class="btn-loc" id="getLocationBtn">📍 我现在在哪</button>
+        <button class="btn-loc" id="getLocationBtn">📍 我现在在哪里</button>
     </div>
     
-    <!-- 定位结果显示区域 (动态展示坐标 + 查看地图 + 独立复制坐标按钮) -->
+    <!-- 定位结果显示区域 -->
     <div id="locationResultContainer" class="location-result-box" style="display: none;">
         <div id="locationDisplayText"></div>
         <div id="coordActionArea" class="coord-row"></div>
@@ -396,14 +406,14 @@
     <div class="card">
         <div class="card-title">💰 常见维修报价参考</div>
         <div class="price-table">
-            <p><span>🔧 全合成机油保养 (4L)</span><span>RM 180 - 250</span></p>
+            <p><span>🔧 全合成机油保养 (4升)</span><span>RM 180 - 250</span></p>
             <p><span>🛞 更换刹车片 (一对)</span><span>RM 120 - 200</span></p>
             <p><span>❄️ 汽车冷气加冷媒</span><span>RM 70 - 120</span></p>
             <p><span>📟 电脑诊断故障码</span><span>RM 30 - 50</span></p>
             <p><span>⚙️ 自动变速箱油更换</span><span>RM 220 - 380</span></p>
-            <p><span>🔋 电池更换 (普通轿车)</span><span>RM 180 - 300</span></p>
+            <p><span>🔋 更换汽车电池 (普通轿车)</span><span>RM 180 - 300</span></p>
         </div>
-        <div style="font-size:12px; color:#8d9aa8; margin-top:8px;">*最终价格视车型而定，欢迎WhatsApp确认</div>
+        <div style="font-size:12px; color:#8d9aa8; margin-top:8px;">*最终价格视车款而定，欢迎 WhatsApp 确认</div>
     </div>
 
     <!-- 功能3：故障自检小助手 -->
@@ -414,41 +424,39 @@
                 <span class="symptom-name">⚠️ 引擎灯亮起</span>
                 <span class="symptom-arrow">▼</span>
             </div>
-            <div id="advice1" class="advice-box">👉 可能原因：氧传感器、点火系统或油路问题。<br>✅ 建议：尽快预约进厂电脑诊断，避免油耗增加或损坏三元催化。</div>
+            <div id="advice1" class="advice-box">👉 可能原因：氧传感器、点火系统或油路问题。<br>✅ 建议：尽快预约进厂电脑诊断，避免油耗增加或损坏三元催化器。</div>
             
             <div class="symptom-item" data-advice="advice2">
                 <span class="symptom-name">🚙 汽车抖动 / 加速无力</span>
                 <span class="symptom-arrow">▼</span>
             </div>
-            <div id="advice2" class="advice-box">👉 可能原因：火花塞老化、节气门脏、喷油嘴堵塞。<br>✅ 尝试：检查是否缺缸，低速开到维修厂清洗节气门。</div>
+            <div id="advice2" class="advice-box">👉 可能原因：火花塞老化、节气门脏污、喷油嘴堵塞。<br>✅ 尝试：检查是否缺缸，慢速开到维修厂清洗节气门。</div>
             
             <div class="symptom-item" data-advice="advice3">
                 <span class="symptom-name">🥶 冷气不冷 / 有异味</span>
                 <span class="symptom-arrow">▼</span>
             </div>
-            <div id="advice3" class="advice-box">👉 可能原因：冷媒不足、冷凝器脏污、冷气滤芯阻塞。<br>✅ 建议：先检查滤芯，若仍不冷需打压测漏。</div>
+            <div id="advice3" class="advice-box">👉 可能原因：冷媒不足、散热片脏污、冷气滤芯堵塞。<br>✅ 建议：先检查滤芯，若仍不冷需打压测漏。</div>
             
             <div class="symptom-item" data-advice="advice4">
-                <span class="symptom-name">🔊 刹车时有尖叫声</span>
+                <span class="symptom-name">🔊 刹车时有异常声响</span>
                 <span class="symptom-arrow">▼</span>
             </div>
-            <div id="advice4" class="advice-box">👉 可能原因：刹车片磨损到极限或夹杂异物。<br>✅ 紧急程度：高！请尽快到店更换刹车片，检查刹车盘。</div>
+            <div id="advice4" class="advice-box">👉 可能原因：刹车片磨损到极限或卡有异物。<br>✅ 紧急程度：高！请尽快到店更换刹车片，检查刹车盘。</div>
         </div>
     </div>
 
-    <!-- 功能4：快速联系整合 -->
+    <!-- 功能4：快速联系整合 (已移除邮件按钮) -->
     <div class="card">
-        <div class="card-title">📱 快速联系 · 预约/咨询</div>
+        <div class="card-title">📱 快速联系 · 预约 / 咨询</div>
         <div class="contact-buttons">
-            <div class="contact-row">
-                <a href="https://wa.me/60127139704?text=老板你好，我的车是[车型]，问题：[例如保养/异响]，想预约时间" target="_blank" class="contact-btn btn-wa-contact">💬 WhatsApp 预约</a>
-                <a href="mailto:davisteng@icloud.com?subject=维修咨询%20来自工具卡&body=您好，我的车有问题想请教，附上照片" class="contact-btn">📧 发送邮件+照片</a>
-            </div>
+            <!-- 只保留 WhatsApp 预约按钮 -->
+            <a href="https://wa.me/60127139704?text=老板你好，我的车是[车型]，问题：[例如保养/异响]，想预约时间" target="_blank" class="contact-btn btn-wa-contact">💬 WhatsApp 预约 / 咨询</a>
             <div class="copy-addr" id="copyAddressBtn">📋 复制车厂地址 (Google Map 导航用)</div>
             <a href="https://www.facebook.com/share/18h2VXXrKY/" target="_blank" class="contact-btn" style="background:#4267B2; color:white;">👍 追踪我们的Facebook专页</a>
         </div>
     </div>
-    <footer>保存到手机桌面，随时打开使用 | 新達汽車業 012-713 9704</footer>
+    <footer>📲 保存到手机桌面，随时打开使用 | 新达汽车修理厂 012-713 9704</footer>
 </div>
 <div id="toastMsg" class="toast-msg">✅ 已复制地址</div>
 <div id="toastCoordMsg" class="toast-msg" style="background:#ffb347; color:#1e2a3e;">📍 坐标已复制，可粘贴给店家</div>
@@ -498,18 +506,18 @@
         });
     });
 
-    // 定位功能 + 显示“查看地图” + 独立“复制当前坐标”按钮 (移除长按复制坐标描述)
+    // 定位功能
     const getLocationBtn = document.getElementById('getLocationBtn');
     const locationResultContainer = document.getElementById('locationResultContainer');
     const locationDisplayText = document.getElementById('locationDisplayText');
     const coordActionArea = document.getElementById('coordActionArea');
     const toastCoord = document.getElementById('toastCoordMsg');
 
-    // 辅助显示toast
     function showToast(msg, isCoordToast = false) {
         const toastEl = isCoordToast ? toastCoord : document.getElementById('toastMsg');
         toastEl.style.display = 'block';
-        toastEl.innerText = isCoordToast ? '📍 坐标已复制，可粘贴给店家' : msg;
+        if (!isCoordToast) toastEl.innerText = msg;
+        else toastEl.innerText = '📍 坐标已复制，可粘贴给店家';
         setTimeout(() => {
             toastEl.style.display = 'none';
             if(isCoordToast) toastEl.innerText = '📍 坐标已复制，可粘贴给店家';
@@ -519,10 +527,9 @@
 
     getLocationBtn.addEventListener('click', () => {
         if (navigator.geolocation) {
-            // 先显示加载状态
             locationResultContainer.style.display = 'block';
             locationDisplayText.innerHTML = '📍 正在获取位置...';
-            coordActionArea.innerHTML = ''; // 清空按钮区域
+            coordActionArea.innerHTML = '';
 
             navigator.geolocation.getCurrentPosition(
                 (position) => {
@@ -531,23 +538,19 @@
                     const mapsLink = `https://maps.google.com/?q=${lat},${lng}`;
                     const coordText = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
                     
-                    // 显示坐标详情 + 查看地图链接 + 独立复制坐标按钮
                     locationDisplayText.innerHTML = `
                         📍 当前坐标: <strong style="font-family:monospace;">${coordText}</strong>
                     `;
                     
-                    // 构建操作区域：包含「查看地图」链接 + 「复制当前坐标」按钮
                     coordActionArea.innerHTML = `
                         <a href="${mapsLink}" target="_blank" class="map-link" style="text-decoration:none;">🗺️ 查看地图</a>
                         <button id="copyCurrentCoordBtn" class="btn-copy-coord">📋 复制当前坐标</button>
                     `;
                     
-                    // 绑定复制坐标按钮事件
                     const copyCoordBtn = document.getElementById('copyCurrentCoordBtn');
                     if (copyCoordBtn) {
                         copyCoordBtn.addEventListener('click', (e) => {
                             e.stopPropagation();
-                            // 复制坐标文本 (lat,lng)
                             const fullCoord = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
                             navigator.clipboard.writeText(fullCoord).then(() => {
                                 showToast('', true);
@@ -558,7 +561,7 @@
                     }
                 },
                 (error) => {
-                    let errMsg = "无法获取位置，请检查GPS权限";
+                    let errMsg = "无法获取位置，请检查 GPS 权限";
                     if (error.code === 1) {
                         errMsg = "⚠️ 请允许位置权限才能使用定位";
                     }
@@ -573,7 +576,7 @@
         }
     });
 
-    // 复制车厂地址 (原有功能)
+    // 复制车厂地址
     const copyBtn = document.getElementById('copyAddressBtn');
     const fullAddress = "No.146 & 148, Jln Pahlawan 2, Taman Ungku Tun Aminah, 81300 Johor Bahru, Malaysia";
     
@@ -591,9 +594,7 @@
             });
     });
 
-    // =====================================================
-    // 安装教程弹窗逻辑（保持原有完整功能）
-    // =====================================================
+    // 安装教程弹窗逻辑
     const modal = document.getElementById('installModal');
     const closeBtn = document.getElementById('closeInstallModal');
     const dontShowBtn = document.getElementById('dontShowAgain');
